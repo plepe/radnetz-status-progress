@@ -5,6 +5,7 @@
     "watch": "watchify -p esmify --debug src/app.js -o dist/app.js -v"
   },
   "dependencies": {
+    "async": "^3.2.4",
     "chart.js": "^4.3.0",
     "csvtojson": "^2.0.10"
   },
