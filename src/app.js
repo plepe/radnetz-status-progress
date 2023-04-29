@@ -1,5 +1,6 @@
 import async from 'async'
 import Chart from 'chart.js/auto'
+import 'chartjs-adapter-moment';
 import getResult from './getResult'
 import getStatuses from './getStatuses'
 
@@ -32,7 +33,6 @@ function show ({ statuses, result }) {
         borderWidth: 1
       }
     })
-    console.log(datasets)
 
     const ctx = document.getElementById('chart')
     new Chart(ctx, {
@@ -44,6 +44,8 @@ function show ({ statuses, result }) {
       options: {
         scales: {
           x: {
+            type: 'time',
+            min: '2022-04-01'
           },
           y: {
             stacked: true,

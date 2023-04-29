@@ -7,7 +7,9 @@
   "dependencies": {
     "async": "^3.2.4",
     "chart.js": "^4.3.0",
-    "csvtojson": "^2.0.10"
+    "chartjs-adapter-moment": "^1.0.1",
+    "csvtojson": "^2.0.10",
+    "moment": "^2.29.4"
   },
   "devDependencies": {
     "browserify": "^17.0.0",
