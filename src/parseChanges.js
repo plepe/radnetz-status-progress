@@ -1,6 +1,6 @@
 module.exports = function parseChanges (data) {
   return data.map(entry => {
-    entry.log = entry['Statusänderungen Protokoll']
+    entry.log = entry['Statusaenderungen Protokoll']
       .split(';')
       .map(l => {
         const m = l.match(/(vor |)([0-9-]*)(?:| (.*))$/)
