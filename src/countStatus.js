@@ -1,6 +1,8 @@
 module.exports = function countStatus (data, changeDates) {
   const result = {}
-  changeDates.forEach(d => result[d] = [])
+  changeDates.forEach(d => {
+    result[d] = []
+  })
 
   data.forEach(entry => {
     let i = 0

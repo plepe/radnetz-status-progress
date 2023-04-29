@@ -1,5 +1,11 @@
 {
+  "scripts": {
+    "lint": "standard --fix *.js src/*.js"
+  },
   "dependencies": {
     "csvtojson": "^2.0.10"
+  },
+  "devDependencies": {
+    "standard": "^17.0.0"
   }
 }
