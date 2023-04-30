@@ -1,3 +1,4 @@
 {
-  "url": "https://example.com/bauprogramm.csv?jahr={year}"
+  "url": "https://example.com/bauprogramm.csv?jahr={year}",
+  "urlStatues": "statuses.csv"
 }
