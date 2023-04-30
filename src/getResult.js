@@ -5,7 +5,6 @@ const load = require('./load')
 
 module.exports = function getResult (year, callback) {
   load(year, (err, data) => {
-    console.log(data)
     if (err) { return callback(err) }
 
     data = parseChanges(data)
