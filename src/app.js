@@ -1,3 +1,4 @@
+import qs from 'query-string'
 import async from 'async'
 import Chart from 'chart.js/auto'
 import 'chartjs-adapter-moment';
@@ -6,7 +7,8 @@ import getStatuses from './getStatuses'
 
 let statuses
 
-const year = '2021'
+const args = qs.parse(location.search)
+const year = args.year ?? new Date().toISOString().substr(0, 4)
 
 window.onload = () => {
   async.parallel({
