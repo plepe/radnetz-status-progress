@@ -6,10 +6,12 @@ import getStatuses from './getStatuses'
 
 let statuses
 
+const year = '2021'
+
 window.onload = () => {
   async.parallel({
     statuses: (done) => getStatuses(done),
-    result: (done) => getResult('2022', done)
+    result: (done) => getResult(year, done)
   }, (err, data) => {
     if (err) { return console.error(err) }
     show(data)
@@ -34,6 +36,11 @@ function show ({ statuses, result }) {
       }
     })
 
+    let lastDate = Object.keys(result).concat().pop()
+    if (lastDate < (parseInt(year) + 1) + '-03-30') {
+      lastDate = (parseInt(year) + 1) + '-03-30'
+    }
+
     const ctx = document.getElementById('chart')
     new Chart(ctx, {
       type: 'line',
@@ -45,7 +52,8 @@ function show ({ statuses, result }) {
         scales: {
           x: {
             type: 'time',
-            min: '2022-04-01'
+            min: year < 2023 ? year + '-04-01' : null,
+            max: lastDate
           },
           y: {
             stacked: true,

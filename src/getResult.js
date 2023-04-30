@@ -4,7 +4,7 @@ const countStatus = require('./countStatus')
 const load = require('./load')
 
 module.exports = function getResult (year, callback) {
-  load('2022', (err, data) => {
+  load(year, (err, data) => {
     console.log(data)
     if (err) { return callback(err) }
 
