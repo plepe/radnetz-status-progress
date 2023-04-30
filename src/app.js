@@ -54,6 +54,15 @@ function show ({ statuses, result }) {
       },
       options: {
         locale: 'de-AT',
+        plugins: {
+          title: {
+            display: true,
+            text: 'Entwicklung des Bauprogramms ' + year
+          },
+          legend: {
+            position: 'bottom'
+          }
+        },
         scales: {
           x: {
             type: 'time',
@@ -64,6 +73,10 @@ function show ({ statuses, result }) {
             max: lastDate
           },
           y: {
+            title: {
+              display: true,
+              text: 'Anzahl Bauprojekte',
+            },
             stacked: true,
             beginAtZero: true
           }
