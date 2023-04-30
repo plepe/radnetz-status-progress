@@ -1,6 +1,8 @@
 import qs from 'query-string'
 import async from 'async'
 import Chart from 'chart.js/auto'
+import moment from 'moment'
+import 'moment/locale/de'
 import 'chartjs-adapter-moment';
 import getResult from './getResult'
 import getStatuses from './getStatuses'
@@ -51,9 +53,13 @@ function show ({ statuses, result }) {
         datasets
       },
       options: {
+        locale: 'de-AT',
         scales: {
           x: {
             type: 'time',
+            time: {
+              unit: 'month'
+            },
             min: year < 2023 ? year + '-04-01' : null,
             max: lastDate
           },
