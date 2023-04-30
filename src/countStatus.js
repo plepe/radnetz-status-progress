@@ -1,3 +1,5 @@
+import config from '../config.json'
+
 module.exports = function countStatus (data, changeDates) {
   const result = {}
   changeDates.forEach(d => {
@@ -23,7 +25,7 @@ module.exports = function countStatus (data, changeDates) {
   })
 
   const last = changeDates[changeDates.length - 1]
-  if (result[last].filter(v => !['fertiggestellt', 'verschwunden', 'verschoben'].includes(v)).length > 0) {
+  if (result[last].filter(v => !config.finalStatuses.includes(v)).length > 0) {
     result[new Date().toISOString()] = result[last]
   }
 
