@@ -11,11 +11,7 @@ module.exports = function countStatus (data, changeDates) {
     changeDates.forEach(d => {
       if (i < entry.log.length && entry.log[i].date === d) {
         if (entry.log[i].status) {
-          if (entry.log[i].status !== 'verschwunden') {
-            currentStatus = entry.log[i].status
-          } else {
-            currentStatus = null
-          }
+          currentStatus = entry.log[i].status
         }
         i++
       }
