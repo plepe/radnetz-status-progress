@@ -57,6 +57,8 @@ function show ({ statuses, result }) {
       },
       options: {
         locale: 'de-AT',
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           title: {
             display: true,
