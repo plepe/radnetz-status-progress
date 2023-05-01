@@ -48,6 +48,26 @@ function show ({ statuses, result }) {
       lastDate = (parseInt(year) + 1) + '-03-30'
     }
 
+    let firstDate = Object.keys(result)[0]
+    if (firstDate === '2023-01-08') {
+      datasets.push({
+        stepped: true,
+        fill: false,
+        label: 'keine Daten vorhanden',
+        borderColor: '#afafaf',
+        data: [
+          {
+            x: year + '-04-01',
+            y: result[firstDate].length
+          },
+          {
+            x: '2023-01-07',
+            y: result[firstDate].length
+          }
+        ]
+      })
+    }
+
     const ctx = document.getElementById('chart')
     new Chart(ctx, {
       type: 'line',
