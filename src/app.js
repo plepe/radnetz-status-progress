@@ -58,6 +58,7 @@ function show ({ statuses, result }) {
         fill: false,
         label: 'keine Daten vorhanden',
         borderColor: '#afafaf',
+        borderDash: [5, 5],
         data: [
           {
             x: year + '-04-01',
