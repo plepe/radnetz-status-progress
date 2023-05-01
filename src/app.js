@@ -27,18 +27,21 @@ function show ({ statuses, result }) {
     const datasets = statuses
       .filter(status => !config.hideStatuses.includes(status.Status))
       .map(status => {
+        let data = Object.entries(result).map(l => {
+          return {
+            x: l[0],
+            y: l[1].filter(v => v === status.Status).length
+          }
+        })
+        data = data.filter((v, i) => v.y > 0 || (i > 0 && data[i - 1].y > 0))
+
         return {
           label: status.Status,
           backgroundColor: status.Farbe,
           borderColor: status.Farbe,
           stepped: true,
           fill: true,
-          data: Object.entries(result).map(l => {
-            return {
-              x: l[0],
-              y: l[1].filter(v => v === status.Status).length
-            }
-          }),
+          data: data,
           borderWidth: 1
         }
       })
