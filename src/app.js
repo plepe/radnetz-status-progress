@@ -83,6 +83,13 @@ function show ({ statuses, result }) {
         locale: 'de-AT',
         responsive: true,
         maintainAspectRatio: false,
+        elements: {
+          point: {
+            hitRadius: 5,
+            pointRadius: 0,
+            hoverRadius: 5
+          }
+        },
         plugins: {
           title: {
             display: true,
