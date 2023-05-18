@@ -12,10 +12,7 @@ import config from '../config.json'
 let statuses
 
 const args = qs.parse(location.search)
-const year = args.jahr ?? new Date().toISOString().substr(0, 4)
-if (!('jahr' in args)) {
-  args.jahr = year
-}
+const year = args.jahr
 
 window.onload = () => {
   async.parallel({
@@ -23,11 +20,15 @@ window.onload = () => {
     data: (done) => load(args, done)
   }, (err, data) => {
     if (err) { return console.error(err) }
-    show(data)
+    if (year) {
+      showYear(data)
+    } else {
+      showTotal(data)
+    }
   })
 }
 
-function show ({ statuses, data }) {
+function showYear ({ statuses, data }) {
   const result = getResult(data)
 
     const datasets = statuses
@@ -113,6 +114,81 @@ function show ({ statuses, data }) {
             },
             min: year < 2023 ? year + '-04-01' : null,
             max: lastDate
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Anzahl Bauprojekte',
+            },
+            stacked: true,
+            beginAtZero: true
+          }
+        }
+      }
+    })
+}
+
+function showTotal ({ statuses, data}) {
+  const datasets = statuses
+    .filter(status => !config.hideStatuses.includes(status.Status))
+    .map(status => {
+      const result = {}
+
+      data.forEach(d => {
+        if (d.Status === status.Status) {
+          if (!(d.Jahr in result)) {
+            result[d.Jahr] = 1
+          } else {
+            result[d.Jahr]++
+          }
+        }
+      })
+
+      return {
+        label: status.Status,
+        backgroundColor: status.Farbe,
+        borderColor: status.Farbe,
+        stepped: true,
+        fill: true,
+        data: result,
+        borderWidth: 1
+      }
+    })
+
+    const ctx = document.getElementById('chart')
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        // labels: Object.keys(result),
+        datasets
+      },
+      options: {
+        locale: 'de-AT',
+        responsive: true,
+        maintainAspectRatio: false,
+        elements: {
+          point: {
+            hitRadius: 5,
+            pointRadius: 0,
+            hoverRadius: 5
+          }
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: 'Entwicklung der Bauprogramme'
+          },
+          legend: {
+            position: 'bottom'
+          }
+        },
+        scales: {
+          x: {
+            type: 'time',
+            stacked: true,
+            time: {
+              unit: 'year'
+            }
           },
           y: {
             title: {
