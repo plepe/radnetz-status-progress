@@ -1,6 +1,5 @@
 {
-  "url": "https://example.com/bauprogramm.csv?jahr={year}",
-  "urlStatues": "statuses.csv",
+  "url": "https://example.com/",
   "hideStatuses": ["verschwunden"],
   "finalStatuses": ["fertiggestellt", "verschwunden", "verschoben"]
 }

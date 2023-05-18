@@ -9,7 +9,7 @@ module.exports = function getStatuses (callback) {
     return callback(null, cache)
   }
 
-  fetch(config.urlStatues)
+  fetch(config.url + 'statuses.csv')
     .then(req => req.text())
     .then(body => {
       const data = []
