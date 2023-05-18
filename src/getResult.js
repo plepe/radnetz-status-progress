@@ -3,14 +3,10 @@ const findChangeDates = require('./findChangeDates')
 const countStatus = require('./countStatus')
 const load = require('./load')
 
-module.exports = function getResult (param, callback) {
-  load(param, (err, data) => {
-    if (err) { return callback(err) }
+module.exports = function getResult (data) {
+  data = parseChanges(data)
+  const changeDates = findChangeDates(data)
+  const result = countStatus(data, changeDates)
 
-    data = parseChanges(data)
-    const changeDates = findChangeDates(data)
-    const result = countStatus(data, changeDates)
-
-    callback(null, result)
-  })
+  return result
 }

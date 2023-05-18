@@ -4,6 +4,7 @@ import Chart from 'chart.js/auto'
 import moment from 'moment'
 import 'moment/locale/de'
 import 'chartjs-adapter-moment';
+import load from './load'
 import getResult from './getResult'
 import getStatuses from './getStatuses'
 import config from '../config.json'
@@ -19,14 +20,16 @@ if (!('jahr' in args)) {
 window.onload = () => {
   async.parallel({
     statuses: (done) => getStatuses(done),
-    result: (done) => getResult(args, done)
+    data: (done) => load(args, done)
   }, (err, data) => {
     if (err) { return console.error(err) }
     show(data)
   })
 }
 
-function show ({ statuses, result }) {
+function show ({ statuses, data }) {
+  const result = getResult(data)
+
     const datasets = statuses
       .filter(status => !config.hideStatuses.includes(status.Status))
       .map(status => {
