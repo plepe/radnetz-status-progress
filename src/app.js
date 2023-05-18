@@ -11,12 +11,15 @@ import config from '../config.json'
 let statuses
 
 const args = qs.parse(location.search)
-const year = args.year ?? new Date().toISOString().substr(0, 4)
+const year = args.jahr ?? new Date().toISOString().substr(0, 4)
+if (!('jahr' in args)) {
+  args.jahr = year
+}
 
 window.onload = () => {
   async.parallel({
     statuses: (done) => getStatuses(done),
-    result: (done) => getResult(year, done)
+    result: (done) => getResult(args, done)
   }, (err, data) => {
     if (err) { return console.error(err) }
     show(data)
