@@ -1,0 +1,6 @@
+body #loading-indicator {
+  display: none;
+}
+body.loading #loading-indicator {
+  display: block;
+}

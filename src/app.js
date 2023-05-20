@@ -20,6 +20,9 @@ window.onload = () => {
     data: (done) => load(args, done)
   }, (err, data) => {
     if (err) { return console.error(err) }
+
+    document.body.className = ''
+
     if (year) {
       showYear(data)
     } else {
