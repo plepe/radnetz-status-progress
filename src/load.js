@@ -4,7 +4,9 @@ const csvtojson = require('csvtojson')
 const config = require('../config.json')
 
 module.exports = function load (param, callback) {
-  fetch(config.url + 'bauprogramm.csv?' + qs.stringify(param))
+  const file = param.jahr ? 'bauprogramm.csv' : 'bauprogramm-ohne-aenderungen.csv'
+
+  fetch(config.url + file + '?' + qs.stringify(param))
     .then(req => req.text())
     .then(body => {
       const data = []
