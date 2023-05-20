@@ -4,3 +4,7 @@ body #loading-indicator {
 body.loading #loading-indicator {
   display: block;
 }
+body.error #loading-indicator {
+  display: block;
+  color: red;
+}

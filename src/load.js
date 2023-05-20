@@ -16,4 +16,7 @@ module.exports = function load (param, callback) {
         .subscribe(line => data.push(line))
         .on('done', () => callback(null, data))
     })
+    .catch(err => {
+      global.setTimeout(() => callback(err), 0)
+    })
 }

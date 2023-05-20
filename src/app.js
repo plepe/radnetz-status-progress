@@ -19,7 +19,12 @@ window.onload = () => {
     statuses: (done) => getStatuses(done),
     data: (done) => load(args, done)
   }, (err, data) => {
-    if (err) { return console.error(err) }
+    if (err) {
+      document.body.className = 'error'
+      document.getElementById('loading-indicator').innerHTML = err
+
+      return console.error(err)
+    }
 
     document.body.className = ''
 
