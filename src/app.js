@@ -143,7 +143,8 @@ function showTotal ({ statuses, data}) {
       const result = {}
 
       data.forEach(d => {
-        if (d.Status === status.Status) {
+        const s = d['verschoben nach'] ? 'verschoben' : d.Status
+        if (s === status.Status) {
           if (!(d.Jahr in result)) {
             result[d.Jahr] = 1
           } else {
