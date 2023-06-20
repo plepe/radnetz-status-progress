@@ -129,6 +129,9 @@ function showYear ({ statuses, data }) {
               text: 'Anzahl Bauprojekte',
             },
             stacked: true,
+            ticks: {
+              precision: 0
+            },
             beginAtZero: true
           }
         }
@@ -205,6 +208,9 @@ function showTotal ({ statuses, data}) {
               text: 'Anzahl Bauprojekte',
             },
             stacked: true,
+            ticks: {
+              precision: 0
+            },
             beginAtZero: true
           }
         }
