@@ -14,11 +14,22 @@ let statuses
 const args = qs.parse(location.search)
 const year = args.jahr
 
+const yAxisTitle = {
+  distance: 'Streckenlänge (km)',
+  count: 'Anzahl Bauprojekte'
+}
+let data
+let chart
+
 window.onload = () => {
+  Array.from(document.querySelectorAll('.selector > input'))
+    .forEach((input) => input.onclick = () => show(input))
+  document.querySelector('.selector > input[data-value="' + config.analysisType + '"]').classList.add('selected')
+
   async.parallel({
     statuses: (done) => getStatuses(done),
     data: (done) => load(args, done)
-  }, (err, data) => {
+  }, (err, _data) => {
     if (err) {
       document.body.className = 'error'
       document.getElementById('loading-indicator').innerHTML = err
@@ -28,12 +39,31 @@ window.onload = () => {
 
     document.body.className = ''
 
-    if (year) {
-      showYear(data)
-    } else {
-      showTotal(data)
-    }
+    data = _data
+    show()
   })
+}
+
+function show (input) {
+  if (!data) { return console.error('Data not (yet) loaded') }
+
+  if (chart) {
+    chart.destroy()
+  }
+
+  if (input) {
+    Array.from(document.querySelectorAll('.selector > input'))
+      .forEach((input) => input.classList.remove('selected'))
+
+    config.analysisType = input.getAttribute('data-value')
+    input.classList.add('selected')
+  }
+
+  if (year) {
+    showYear(data)
+  } else {
+    showTotal(data)
+  }
 }
 
 function showYear ({ statuses, data }) {
@@ -45,7 +75,10 @@ function showYear ({ statuses, data }) {
         let data = Object.entries(result).map(l => {
           return {
             x: l[0],
-            y: l[1].filter(v => v === status.Status).length
+            y: l[1]
+              .filter(d => d[0] === status.Status)
+              .map(d => analysisValue(d[1]))
+              .reduce((sum, v) => sum + v, 0)
           }
         })
         data = data.filter((v, i) => v.y > 0 || (i > 0 && data[i - 1].y > 0))
@@ -88,7 +121,7 @@ function showYear ({ statuses, data }) {
     }
 
     const ctx = document.getElementById('chart')
-    new Chart(ctx, {
+    chart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: Object.keys(result),
@@ -126,7 +159,7 @@ function showYear ({ statuses, data }) {
           y: {
             title: {
               display: true,
-              text: 'Anzahl Bauprojekte',
+              text: yAxisTitle[config.analysisType]
             },
             stacked: true,
             ticks: {
@@ -139,6 +172,16 @@ function showYear ({ statuses, data }) {
     })
 }
 
+function analysisValue (entry) {
+  switch (config.analysisType ?? 0) {
+    case 'distance':
+      return parseFloat(entry['Länge'] || '0') / 1000
+    case 'count':
+    default:
+      return 1
+  }
+}
+
 function showTotal ({ statuses, data}) {
   const datasets = statuses
     .filter(status => !config.hideStatuses.includes(status.Status))
@@ -149,10 +192,10 @@ function showTotal ({ statuses, data}) {
         const s = d['verschoben nach'] ? 'verschoben' : d.Status
         if (s === status.Status) {
           if (!(d.Jahr in result)) {
-            result[d.Jahr] = 1
-          } else {
-            result[d.Jahr]++
+            result[d.Jahr] = 0
           }
+
+          result[d.Jahr] += analysisValue(d)
         }
       })
 
@@ -168,7 +211,7 @@ function showTotal ({ statuses, data}) {
     })
 
     const ctx = document.getElementById('chart')
-    new Chart(ctx, {
+    chart = new Chart(ctx, {
       type: 'bar',
       data: {
         // labels: Object.keys(result),
@@ -205,7 +248,7 @@ function showTotal ({ statuses, data}) {
           y: {
             title: {
               display: true,
-              text: 'Anzahl Bauprojekte',
+              text: yAxisTitle[config.analysisType]
             },
             stacked: true,
             ticks: {
