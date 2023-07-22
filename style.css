@@ -16,9 +16,19 @@ body.error canvas {
 body {
   position: absolute; top: 0; left: 0; right: 0; bottom: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   align-content: center;
+}
+.selector {
+  padding-top: 0.5em;
+}
+.selector input {
+  border-style: outset;
+}
+.selector input.selected {
+  border-style: inset;
 }
 #loading-indicator {
 }

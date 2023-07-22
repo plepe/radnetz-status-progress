@@ -19,7 +19,7 @@ module.exports = function countStatus (data, changeDates) {
       }
 
       if (currentStatus) {
-        result[d].push(currentStatus)
+        result[d].push([currentStatus, entry])
       }
     })
   })
