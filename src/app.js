@@ -114,11 +114,15 @@ function showYear ({ statuses, data }) {
         data: [
           {
             x: year + '-04-01',
-            y: result[firstDate].length
+            y: result[firstDate]
+              .map(d => analysisValue(d[1]))
+              .reduce((sum, v) => sum + v, 0)
           },
           {
             x: '2023-01-07',
-            y: result[firstDate].length
+            y: result[firstDate]
+              .map(d => analysisValue(d[1]))
+              .reduce((sum, v) => sum + v, 0)
           }
         ]
       })
