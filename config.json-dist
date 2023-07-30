@@ -1,5 +1,6 @@
 {
   "url": "https://example.com/",
   "hideStatuses": ["verschwunden"],
-  "finalStatuses": ["fertiggestellt", "verschwunden", "verschoben"]
+  "finalStatuses": ["fertiggestellt", "verschwunden", "verschoben"],
+  "logStart": "2023-01-08"
 }

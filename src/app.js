@@ -99,7 +99,7 @@ function showYear ({ statuses, data }) {
       })
 
     let lastDate = Object.keys(result).concat().pop()
-    if (lastDate < (parseInt(year) + 1) + '-03-30') {
+    if (lastDate < (parseInt(year) + 1) + '-03-30' || lastDate === config.logStart) {
       lastDate = (parseInt(year) + 1) + '-03-30'
     }
 
