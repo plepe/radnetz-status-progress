@@ -25,7 +25,7 @@ module.exports = function countStatus (data, changeDates) {
   })
 
   const last = changeDates[changeDates.length - 1]
-  if (result[last].filter(v => !config.finalStatuses.includes(v)).length > 0) {
+  if (result[last].filter(v => !config.finalStatuses.includes(v[0])).length > 0) {
     result[new Date().toISOString()] = result[last]
   }
 
