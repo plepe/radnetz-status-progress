@@ -22,6 +22,10 @@ let data
 let chart
 
 window.onload = () => {
+  if (!('analysisType' in config)) {
+    config.analysisType = 'count'
+  }
+
   Array.from(document.querySelectorAll('.selector > input'))
     .forEach((input) => input.onclick = () => show(input))
   document.querySelector('.selector > input[data-value="' + config.analysisType + '"]').classList.add('selected')
